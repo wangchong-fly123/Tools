@@ -1,0 +1,8 @@
+E:\x\KKGame\tools\createEffect\createEffect\createEffect\bin\Debug\createEffect.exe.config
+E:\x\KKGame\tools\createEffect\createEffect\createEffect\bin\Debug\createEffect.exe
+E:\x\KKGame\tools\createEffect\createEffect\createEffect\bin\Debug\createEffect.pdb
+E:\x\KKGame\tools\createEffect\createEffect\createEffect\obj\Debug\createEffect.Form1.resources
+E:\x\KKGame\tools\createEffect\createEffect\createEffect\obj\Debug\createEffect.Properties.Resources.resources
+E:\x\KKGame\tools\createEffect\createEffect\createEffect\obj\Debug\createEffect.csproj.GenerateResource.Cache
+E:\x\KKGame\tools\createEffect\createEffect\createEffect\obj\Debug\createEffect.exe
+E:\x\KKGame\tools\createEffect\createEffect\createEffect\obj\Debug\createEffect.pdb
