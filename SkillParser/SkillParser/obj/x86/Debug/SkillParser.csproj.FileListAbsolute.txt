@@ -1,0 +1,8 @@
+D:\u3D\network\SkillParser\SkillParser\bin\Debug\SkillParser.exe
+D:\u3D\network\SkillParser\SkillParser\bin\Debug\SkillParser.pdb
+D:\u3D\network\SkillParser\SkillParser\obj\x86\Debug\SkillParser.Form1.resources
+D:\u3D\network\SkillParser\SkillParser\obj\x86\Debug\SkillParser.Properties.Resources.resources
+D:\u3D\network\SkillParser\SkillParser\obj\x86\Debug\SkillParser.csproj.GenerateResource.Cache
+D:\u3D\network\SkillParser\SkillParser\obj\x86\Debug\SkillParser.exe
+D:\u3D\network\SkillParser\SkillParser\obj\x86\Debug\SkillParser.pdb
+D:\u3D\network\SkillParser\SkillParser\obj\x86\Debug\SkillParser.csprojResolveAssemblyReference.cache
