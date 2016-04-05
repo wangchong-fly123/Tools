@@ -1,0 +1,36 @@
+﻿生成启动时间为 2016-4-5 22:32:24。
+     1>项目“D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\tblcoder.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         所有输出均为最新。
+         所有输出均为最新。
+       ResourceCompile:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _DEBUG /l"0x0409" /ID:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\ /nologo /fo"D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.res" tblcoder.rc 
+       ManifestResourceCompile:
+         所有输出均为最新。
+     1>C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.exe) 与 Linker 的 OutputFile 属性值(D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder.exe)不匹配。这可能导致项目生成不正确。若要更正此问题，请确保 $(OutDir)、$(TargetName) 和 $(TargetExt) 属性值与 %(Link.OutputFile) 中指定的值匹配。
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder.exe" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.lib" /MACHINE:X86 D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.res
+         D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.exe.embed.manifest.res
+         D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\Compiler.obj
+         D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\markupstl.obj
+         D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\Parser.obj
+         D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\PropCompiler.obj
+         D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\stdafx.obj
+         D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.obj
+         D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoderDlg.obj
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.exe.embed.manifest" /manifest D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.exe.intermediate.manifest "C:\Program Files\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
+         所有输出均为最新。
+       LinkEmbedManifest:
+         所有输出均为最新。
+         tblcoder.vcxproj -> D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.exe
+       FinalizeBuildStatus:
+         正在删除文件“D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.unsuccessfulbuild”。
+         正在对“D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\output\tblcoder\Debug\tblcoder.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“D:\BaiduYunDownload\TSSG_CODE\trunk\source\server2\tools\tblcoder\tblcoder.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.94
