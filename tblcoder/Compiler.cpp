@@ -1218,7 +1218,8 @@ bool CCompiler::_WriteTblHeaderFile2(CTableClassInfo& roClassInfo)
         "    %s();\n"
         "    ~%s();\n"
         "\n"
-        "    bool Load(const std::string &strConfigDir);\n",
+        "    bool Load(const std::string &strConfigDir);\n"
+        "    bool ReLoad(const std::string &strConfigDir);\n",
         roClassInfo.m_strClassName,
         roClassInfo.m_strClassName);
 
@@ -1244,7 +1245,7 @@ bool CCompiler::_WriteTblHeaderFile2(CTableClassInfo& roClassInfo)
 
     fprintf(fp,    
         "    %s::CMapItem &GetAllItems() { return m_oMapItem; }\n"
-        "\n"
+        "    void Clear() { m_oMapItem.clear(); }\n"
         "protected:\n",
         roClassInfo.m_strClassName);
 
@@ -1433,6 +1434,14 @@ bool CCompiler::_WriteTblCppFile2(CTableClassInfo& roClassInfo)
         roClassInfo.m_oVecItems.size(),
         roClassInfo.m_oVecItems.size(),
         roClassInfo.m_oVecItems.size());
+
+    fprintf(fp,
+        "bool %s::ReLoad(const std::string &strConfigDir)\n"
+        "{\n"
+        "    return true;\n"
+        "}\n"
+        "\n",
+        roClassInfo.m_strClassName);
 
     size_t i;
     for(i = 0; i < roClassInfo.m_oVecItems.size(); i++)
