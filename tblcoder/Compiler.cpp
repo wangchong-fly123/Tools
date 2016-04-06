@@ -1407,6 +1407,7 @@ bool CCompiler::_WriteTblCppFile2(CTableClassInfo& roClassInfo)
     fprintf(fp,
         "bool %s::Load(const std::string &strConfigDir)\n"
         "{\n"
+	        "    Clear();\n\n"
 		"    std::vector<std::string> oVecLines;\n"
 		"    if (false == common::util::getAllLinesFromTblFile(\n"
 		"            strConfigDir + m_strFile, &oVecLines)) {\n"
@@ -1435,13 +1436,6 @@ bool CCompiler::_WriteTblCppFile2(CTableClassInfo& roClassInfo)
         roClassInfo.m_oVecItems.size(),
         roClassInfo.m_oVecItems.size());
 
-    fprintf(fp,
-        "bool %s::ReLoad(const std::string &strConfigDir)\n"
-        "{\n"
-        "    return true;\n"
-        "}\n"
-        "\n",
-        roClassInfo.m_strClassName);
 
     size_t i;
     for(i = 0; i < roClassInfo.m_oVecItems.size(); i++)
@@ -1550,6 +1544,21 @@ bool CCompiler::_WriteTblCppFile2(CTableClassInfo& roClassInfo)
         "    return true;\n"
         "}\n"
         "\n");
+
+    fprintf(fp,
+        "bool %s::ReLoad(const std::string &strConfigDir)\n"
+        "{\n"
+	"    CMapItem tempMap;\n"
+	"    tempMap = m_oMapItem;\n"
+	"    if (Load(strConfigDir) == true) {\n"
+	"        return true;\n"
+	"    } else {\n"
+	"        m_oMapItem = tempMap;\n"
+	"    }\n"
+        "    return false;\n"
+        "}\n"
+        "\n",
+        roClassInfo.m_strClassName);
 
     if(KEY_MODE_MULITI == roClassInfo.m_nKeyMode)
     {
