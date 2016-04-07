@@ -331,7 +331,7 @@ void CtblcoderDlg::OnBnClickedBtnCompileCpp2()
     m_strOutputPath = strVal;
     oCompiler.SetOutputPath(m_strOutputPath.c_str());
     
-    oCompiler.CompileCpp2(m_strLoadFile.c_str());
+    oCompiler.CompileCpp(m_strLoadFile.c_str());
 
     GetDlgItem(IDC_EDIT_RESULT)->SetWindowText(oCompiler.m_strErrMsg);
 }
