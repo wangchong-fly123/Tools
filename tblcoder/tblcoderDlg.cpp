@@ -6,7 +6,6 @@
 #include "tblcoder.h"
 #include "tblcoderDlg.h"
 #include "Compiler.h"
-#include "PropCompiler.h"
 #include "markupstl.h"
 
 #ifdef _DEBUG
