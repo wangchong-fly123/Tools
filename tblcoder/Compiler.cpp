@@ -694,7 +694,7 @@ bool CCompiler::_WriteTblCppFile(CTableClassInfo& roClassInfo)
 	else if(KEY_MODE_MULITI_SET == roClassInfo.m_nKeyMode)
 	{
 		fprintf(fp,
-			"bool %s::_AddItem(%s %s,%s %s, CItem *poItem)\n"    //1 
+			"bool %s::_AddItem(%s %s, %s %s, CItem *poItem)\n"    //1 
 			"{\n"
 			"    uint64_t qwKey = %s;\n"//2
 			"    qwKey = (qwKey << 32) | %s;\n"//3
@@ -1276,7 +1276,7 @@ bool CCompiler::_WriteTblCSFile(CTableClassInfo& roClassInfo)
     {
         fprintf(fp,
             "\n"
-            "        \t\tif(false == _AddItem(oItem.m_%s,oItem))\n",
+            "        \t\tif(false == _AddItem(oItem.m_%s, oItem))\n",
             roClassInfo.m_strKeyName);
     }
 
@@ -1420,7 +1420,7 @@ bool CCompiler::_WriteTblCSFile(CTableClassInfo& roClassInfo)
     else if(KEY_MODE_MULITI_SET == roClassInfo.m_nKeyMode)
     {
         fprintf(fp,
-            "\t\tpublic bool _AddItem(%s %s,%s %s, %s poItem)\n"    //1 
+            "\t\tpublic bool _AddItem(%s %s, %s %s, %s poItem)\n"    //1 
             "\t\t{\n"
             "    \t\tUINT64 qwKey = (UINT64)%s;\n"//2
             "    \t\tqwKey = (qwKey << 32) | (UINT64)%s;\n"//3
@@ -1468,7 +1468,7 @@ bool CCompiler::_WriteTblCSFile(CTableClassInfo& roClassInfo)
     else
     {
         fprintf(fp,
-            "\t\tpublic bool _AddItem(%s %s,%s poItem)\n"
+            "\t\tpublic bool _AddItem(%s %s, %s poItem)\n"
             "\t\t{\n"
             "    \t\tif((object)Get(%s) != null)\n"
             "    \t\t{\n"
