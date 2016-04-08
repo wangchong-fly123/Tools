@@ -1,0 +1,21 @@
+<tables>
+	<table name="TblItem" file="tbdata/item" key="ItemID">
+		<col name="ItemID" type="INT32"/>
+		<col name="Name" type="string"/>
+	</table>
+	<table name="TblStore" file="tbdata/store" multikey="ID,ItemID">
+		<col name="ID" type="INT32"/>
+		<col name="ItemID" type="INT32"/>
+		<col name="Name" type="string"/>
+	</table>
+	<table name="TblGoods" file="tbdata/goods" setkey="ID">
+		<col name="ID" type="INT32"/>
+		<col name="Level" type="INT32"/>
+		<col name="Name" type="string"/>
+	</table>
+	<table name="TblReward" file="tbdata/reward" multisetkey="ID,Level">
+		<col name="ID" type="INT32"/>
+		<col name="Level" type="INT32"/>
+		<col name="Name" type="string"/>
+	</table>
+</tables>
