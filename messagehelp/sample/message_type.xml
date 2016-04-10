@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="GB2312"?>
+<messageCmd>
+    <cmd id="162" name="HERO_CARD_USERCMD" comment="card command"/>
+</messageCmd>

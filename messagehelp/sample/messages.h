@@ -1,7 +1,7 @@
 #ifndef _MESSAGE_HERO_CARD_CMD_H
 #define _MESSAGE_HERO_CARD_CMD_H
+#include "CmdType.h"
 #include "zType.h"
-#include <vector>
 ///////////////////////////////////////////////
 //
 //code[messages.h] 由 messagehelp 生成,请勿修改
@@ -12,13 +12,11 @@
 #pragma pack(1)
 namespace Cmd
 {
-namespace Test
-{
     struct stHeroCardCmd : public stNullUserCmd
     {
         stHeroCardCmd()
         {
-            byCmd = HERO_CARD_CMD;
+            byCmd = HERO_CARD_USERCMD;
         }
     };
 
@@ -103,7 +101,6 @@ namespace Test
         DWORD getSize() { return sizeof(*this) + count*sizeof(t_Group_List); }
     };
 
-} //end of namespace Test
 } //end of namespace Cmd
 #pragma pack()
 #endif

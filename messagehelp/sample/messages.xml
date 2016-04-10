@@ -1,4 +1,5 @@
-<messages basename="HeroCardCmd" namespace="Cmd" secondnamespace="Test">
+<?xml version="1.0" encoding="GB2312"?>
+<messages file="message_type.xml" basename="HeroCardCmd" cmdId="162" namespace="Cmd" secondnamespace="">
     <struct name="t_Tujian">
 	<col name="id" type="DWORD"/>
 	<col name="num" type="WORD"/>

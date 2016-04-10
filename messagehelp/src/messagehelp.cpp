@@ -149,6 +149,17 @@ struct structInfo
     }
 };
 
+struct cmdInfo
+{
+    int id;
+    char name[64];
+    char comment[64];
+    cmdInfo()
+    {
+	bzero(this, sizeof(*this));
+    }
+};
+
 /**
  * \brief
  * \param HelloWorld-->HELLO_WORLD
@@ -183,6 +194,89 @@ void nameToBigName(char *name, std::string &realBigName)
     realBigName = bigName;
 }
 
+std::string getCmdTypeName(int id, std::map<int, cmdInfo> cmdTypeMap)
+{
+    std::map<int, cmdInfo>::iterator iter = cmdTypeMap.find(id);
+    if (iter != cmdTypeMap.end()) {
+	std::string str(iter->second.name);
+	return str;
+    }
+    return "";
+}
+
+bool parseMessageType(std::string fileName, std::map<int, cmdInfo> &cmdTypeMap)
+{
+    zXMLParser xml;
+    if(!xml.initFile(fileName))
+    {
+	std::cout<<"file name :"<<fileName<<" maybe wrong!!"<<endl;
+	return false;
+    }
+    xmlNodePtr root = xml.getRootNode("messageCmd");
+    if(!root)
+    {
+	std::cout<<"root node error!!!"<<endl;
+	return false;
+    }
+
+    std::map<std::string, structInfo> structMap;
+    xmlNodePtr structNode = xml.getChildNode(root, "cmd");
+    while (structNode) {
+	cmdInfo info;
+	xml.getNodePropNum(structNode, "id", &info.id, sizeof(info.id));
+	xml.getNodePropStr(structNode, "name", info.name, sizeof(info.name));
+	xml.getNodePropStr(structNode, "comment", info.comment, sizeof(info.comment));
+
+	if (info.id <= 0 || info.id > 255) {
+	    std::cout<<"cmd type id invalid!!!"<<info.id<<endl;
+	    return false;
+	}
+	std::map<int, cmdInfo>::iterator iter = cmdTypeMap.find(info.id);
+	if (iter != cmdTypeMap.end()) {
+	    std::cout<<"cmd type id repeated!!!"<<info.id<<endl;
+	    return false;
+	}
+	cmdTypeMap[info.id] = info;
+	structNode = xml.getNextNode(structNode, "cmd");
+    }
+
+
+    //h
+    std::string outh = "CmdType.h";
+
+    std::string tmp = outh;
+    Zebra::replace_all(tmp, ".h","");
+    Zebra::to_upper(tmp);
+
+    std::ofstream ofh(outh.c_str());
+    ofh<<"#ifndef _MESSAGE_"<<tmp<<"_H"<<std::endl;
+    ofh<<"#define _MESSAGE_"<<tmp<<"_H"<<std::endl;
+    ofh<<"#include \"zType.h\""<<std::endl;
+    ofh<< "///////////////////////////////////////////////"<<std::endl;
+    ofh<< "//"<<std::endl;
+    ofh<< "//"<<"code["<<outh<<"] 由 messagehelp 生成,请勿修改"<<std::endl;
+    ofh<< "//"<<std::endl;
+    ofh<< "///////////////////////////////////////////////"<<std::endl;
+    ofh<<std::endl;
+
+    ofh<<"namespace Cmd"<<std::endl;
+    ofh<<"{"<<std::endl;
+    for (std::map<int, cmdInfo>::iterator iter = cmdTypeMap.begin();
+	 iter != cmdTypeMap.end(); ++iter) {
+	ofh<<"    const BYTE "<<iter->second.name<<" = "<<iter->first<<";";
+	std::string comment(iter->second.comment);
+	if (comment != "") {
+	    ofh<<" //"<<comment<<std::endl;;
+	} else {
+	    ofh<<std::endl;;
+	}
+    }
+    ofh<<"} //end of namespace Cmd"<<std::endl;
+    ofh<<"#endif"<<std::endl;
+
+    return true;
+}
+
 bool run(int argc, char** argv)
 {
     Args args;
@@ -204,9 +298,27 @@ bool run(int argc, char** argv)
 	char baseName[64];
 	char nameSpace[64];
 	char secondNameSpace[64];
+	char messageTypeFile[64];
+	DWORD cmdId = 0;
+	xml.getNodePropNum(root, "cmdId", &cmdId, sizeof(cmdId));
 	xml.getNodePropStr(root, "basename", baseName, sizeof(baseName));
 	xml.getNodePropStr(root, "namespace", nameSpace, sizeof(nameSpace));
 	xml.getNodePropStr(root, "secondnamespace", secondNameSpace, sizeof(secondNameSpace));
+	xml.getNodePropStr(root, "file", messageTypeFile, sizeof(messageTypeFile));
+	std::string typeFile(messageTypeFile);
+	if (typeFile == "") {
+	    std::cout<<"file attr not found!!!"<<endl;
+	    return false;
+	}
+	std::map<int, cmdInfo> cmdTypeMap;
+	if (parseMessageType(typeFile, cmdTypeMap) == false) {
+	    return false;
+	}
+	std::string cmdTypeName = getCmdTypeName(cmdId, cmdTypeMap);
+	if (cmdTypeName == "") {
+	    std::cout<<"cmdId error !!!"<<cmdId<<endl;
+	    return false;
+	}
 	std::string baseBigName = "";
 	nameToBigName(baseName, baseBigName);
 	std::string strSecondNameSpace(secondNameSpace);
@@ -310,7 +422,6 @@ bool run(int argc, char** argv)
 	ofh<<"#define _MESSAGE_"<<baseBigName<<"_H"<<std::endl;
 	ofh<<"#include \"CmdType.h\""<<std::endl;
 	ofh<<"#include \"zType.h\""<<std::endl;
-	ofh<<"#include <vector>"<<std::endl;
 	ofh<< "///////////////////////////////////////////////"<<std::endl;
 	ofh<< "//"<<std::endl;
 	ofh<< "//"<<"code["<<outh<<"] 由 messagehelp 生成,请勿修改"<<std::endl;
@@ -330,7 +441,7 @@ bool run(int argc, char** argv)
 	ofh<<"    {"<<std::endl;
 	ofh<<"        st"<<baseName<<"()"<<std::endl;
 	ofh<<"        {"<<std::endl;
-	ofh<<"            byCmd = "<<baseBigName<<";"<<std::endl;
+	ofh<<"            byCmd = "<<cmdTypeName<<";"<<std::endl;
 	ofh<<"        }"<<std::endl;
 	ofh<<"    };"<<std::endl;
 	ofh<<std::endl;
