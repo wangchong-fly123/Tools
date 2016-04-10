@@ -12,6 +12,8 @@
 #pragma pack(1)
 namespace Cmd
 {
+namespace Test
+{
     struct stHeroCardCmd : public stNullUserCmd
     {
         stHeroCardCmd()
@@ -20,6 +22,45 @@ namespace Cmd
         }
     };
 
+
+    struct t_Group_List
+    {
+        t_Group_List()
+        {
+            index = 0;
+            occupation = 0;
+            cardNum = 0;
+            memset(name, 0, sizeof(name));
+        }
+        DWORD index;
+        DWORD occupation;
+        DWORD cardNum;
+        char name[32];
+    };
+
+    struct t_Tujian
+    {
+        t_Tujian()
+        {
+            id = 0;
+            num = 0;
+        }
+        DWORD id;
+        WORD num;
+    };
+
+    const BYTE NOTIFY_ALL_CARD_TUJIAN_INFO_CMD = 1;
+    struct stNotifyAllCardTujianInfoCmd : public stHeroCardCmd
+    {
+        stNotifyAllCardTujianInfoCmd()
+        {
+            byParam = NOTIFY_ALL_CARD_TUJIAN_INFO_CMD;
+            count = 0;
+        }
+        WORD count;
+        t_Tujian info[0];
+        DWORD getSize() { return sizeof(*this) + count*sizeof(t_Tujian); }
+    };
 
     const BYTE NOTIFY_ONE_CARD_TUJIAN_INFO_CMD = 2;
     struct stNotifyOneCardTujianInfoCmd : public stHeroCardCmd
@@ -37,7 +78,7 @@ namespace Cmd
         char desc[32];
         WORD count;
         WORD state[0];
-        DWORD getSize() { sizeof(this) + count*sizeof(WORD)};
+        DWORD getSize() { return sizeof(*this) + count*sizeof(WORD); }
     };
 
     const BYTE REQ_ALL_CARD_TUJIAN_DATA_USER_CMD = 4;
@@ -49,6 +90,20 @@ namespace Cmd
         }
     };
 
+    const BYTE RET_CARD_GROUP_LIST_INFO_USER_CMD = 6;
+    struct stRetCardGroupListInfoUserCmd : public stHeroCardCmd
+    {
+        stRetCardGroupListInfoUserCmd()
+        {
+            byParam = RET_CARD_GROUP_LIST_INFO_USER_CMD;
+            count = 0;
+        }
+        WORD count;
+        t_Group_List info[0];
+        DWORD getSize() { return sizeof(*this) + count*sizeof(t_Group_List); }
+    };
+
+} //end of namespace Test
 } //end of namespace Cmd
 #pragma pack()
 #endif

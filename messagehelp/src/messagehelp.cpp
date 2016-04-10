@@ -139,6 +139,16 @@ struct messageInfo
     }
 };
 
+struct structInfo
+{
+    char name[64];
+    std::vector<colInfo> colVec;
+    structInfo()
+    {
+	bzero(this, sizeof(*this));
+    }
+};
+
 /**
  * \brief
  * \param HelloWorld-->HELLO_WORLD
@@ -205,6 +215,46 @@ bool run(int argc, char** argv)
 	    hasSecondNameSpace = true;
 	}
 
+	std::map<std::string, structInfo> structMap;
+	xmlNodePtr structNode = xml.getChildNode(root, "struct");
+	while (structNode) {
+	    structInfo message;
+	    xml.getNodePropStr(structNode, "name", message.name, sizeof(message.name));
+	    std::string structName(message.name);
+
+	    std::vector<colInfo> colInfos;
+	    xmlNodePtr colNode = xml.getChildNode(structNode, "col");
+	    while (colNode) {
+		colInfo col;
+
+		xml.getNodePropStr(colNode, "name", col.name, sizeof(col.name));
+		xml.getNodePropStr(colNode, "type", col.type, sizeof(col.type));
+		xml.getNodePropNum(colNode, "size", &col.size, sizeof(col.size));
+		xml.getNodePropNum(colNode, "repeated", &col.repeated, sizeof(col.repeated));
+		if (col.repeated > 0) {
+		    std::cout<<"repeated col can only use in message!!!"<<std::endl;
+		    return false;
+		}
+		std::string colname(col.name);
+		if (colname == "count" ||
+		    colname == "friend") {
+		    std::cout<<"col name must be not count,count is a keywords!!!"<<std::endl;
+		    return false;
+		}
+		colInfos.push_back(col);
+		colNode = xml.getNextNode(colNode, "col");
+	    }
+
+	    std::map<std::string, structInfo>::iterator iter = structMap.find(structName);
+	    if (iter != structMap.end()) {
+		std::cout<<"structName repeated!!!"<<structName<<endl;
+		return false;
+	    }
+	    message.colVec = colInfos;
+	    structMap[structName] = message;
+	    structNode = xml.getNextNode(structNode, "struct");
+	}
+
 	std::map<DWORD, messageInfo> messageMap;
 	xmlNodePtr messageNode = xml.getChildNode(root, "message");
 	while (messageNode) {
@@ -221,12 +271,14 @@ bool run(int argc, char** argv)
 		xml.getNodePropStr(colNode, "type", col.type, sizeof(col.type));
 		xml.getNodePropNum(colNode, "size", &col.size, sizeof(col.size));
 		xml.getNodePropNum(colNode, "repeated", &col.repeated, sizeof(col.repeated));
-		if (col.type == "string" && col.repeated) {
+		std::string coltype(col.type);
+		if (coltype == "string" && col.repeated > 0) {
 		    std::cout<<"repeated col can not be string!!!"<<std::endl;
 		    return false;
 		}
 		std::string colname(col.name);
-		if (colname == "count") {
+		if (colname == "count" ||
+		    colname == "friend") {
 		    std::cout<<"col name must be not count,count is a keywords!!!"<<std::endl;
 		    return false;
 		}
@@ -256,6 +308,7 @@ bool run(int argc, char** argv)
 	std::ofstream ofh(outh.c_str());
 	ofh<<"#ifndef _MESSAGE_"<<baseBigName<<"_H"<<std::endl;
 	ofh<<"#define _MESSAGE_"<<baseBigName<<"_H"<<std::endl;
+	ofh<<"#include \"CmdType.h\""<<std::endl;
 	ofh<<"#include \"zType.h\""<<std::endl;
 	ofh<<"#include <vector>"<<std::endl;
 	ofh<< "///////////////////////////////////////////////"<<std::endl;
@@ -283,6 +336,39 @@ bool run(int argc, char** argv)
 	ofh<<std::endl;
 	ofh<<std::endl;
 
+	// struct
+	for (std::map<std::string, structInfo>::iterator iter = structMap.begin();
+	     iter != structMap.end(); ++iter) {
+	    std::string strcutName = iter->first;
+	    std::vector<colInfo> &colInfos = iter->second.colVec;
+	    ofh<<"    struct "<<iter->second.name<<std::endl;
+	    ofh<<"    {"<<std::endl;
+	    ofh<<"        "<<iter->second.name<<"()"<<std::endl;
+	    ofh<<"        {"<<std::endl;
+	    for (std::vector<colInfo>::iterator it = colInfos.begin();
+		 it != colInfos.end(); ++it) {
+		std::string str(it->type);
+		if (str == "string") {
+		    ofh<<"            memset("<<it->name<<", 0, "<<"sizeof("<<it->name<<")"<<");"<<std::endl;
+		} else {
+		    ofh<<"            "<<it->name<<" = 0;"<<std::endl;
+		}
+	    }
+	    ofh<<"        }"<<std::endl;
+	    for (std::vector<colInfo>::iterator it = colInfos.begin();
+		    it != colInfos.end(); ++it) {
+		std::string str(it->type);
+		if (str == "string") {
+		    ofh<<"        "<<"char"<<" "<<it->name<<"["<<it->size<<"]"<<";"<<std::endl;
+		} else {
+		    ofh<<"        "<<it->type<<" "<<it->name<<";"<<std::endl;
+		}
+	    }
+	    ofh<<"    };"<<std::endl;
+	    ofh<<std::endl;
+	}
+
+	// message
 	for (std::map<DWORD, messageInfo>::iterator iter = messageMap.begin();
 	     iter != messageMap.end(); ++iter) {
 	    DWORD message_id = iter->first;
@@ -315,7 +401,7 @@ bool run(int argc, char** argv)
 		if (it->repeated) {
 			ofh<<"        WORD count;"<<std::endl;
 			ofh<<"        "<<it->type<<" "<<it->name<<"[0]"<<";"<<std::endl;
-			ofh<<"        DWORD getSize() { sizeof(this) + count*sizeof("<<it->type<<")};"<<std::endl;
+			ofh<<"        DWORD getSize() { return sizeof(*this) + count*sizeof("<<it->type<<"); }"<<std::endl;
 		} else {
 		    if (str == "string") {
 			ofh<<"        "<<"char"<<" "<<it->name<<"["<<it->size<<"]"<<";"<<std::endl;

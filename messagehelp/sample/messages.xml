@@ -1,10 +1,26 @@
-<messages basename="HeroCardCmd" namespace="Cmd" secondnamespace="">
-	<message id="2" name="NotifyOneCardTujianInfoCmd">
-		<col name="id" type="DWORD"/>
-		<col name="num" type="DWORD"/>
-		<col name="desc" type="string" size="32"/>
-		<col name="state" type="WORD" repeated="1"/>
-	</message>
-	<message id="4" name="ReqAllCardTujianDataUserCmd">
-	</message>
+<messages basename="HeroCardCmd" namespace="Cmd" secondnamespace="Test">
+    <struct name="t_Tujian">
+	<col name="id" type="DWORD"/>
+	<col name="num" type="WORD"/>
+    </struct>
+    <struct name="t_Group_List">
+	<col name="index" type="DWORD"/>
+	<col name="occupation" type="DWORD"/>
+	<col name="cardNum" type="DWORD"/>
+	<col name="name" type="string" size="32"/>
+    </struct>
+    <message id="1" name="NotifyAllCardTujianInfoCmd">
+	<col name="info" type="t_Tujian" repeated="1"/>
+    </message>
+    <message id="2" name="NotifyOneCardTujianInfoCmd">
+	<col name="id" type="DWORD"/>
+	<col name="num" type="DWORD"/>
+	<col name="desc" type="string" size="32"/>
+	<col name="state" type="WORD" repeated="1"/>
+    </message>
+    <message id="4" name="ReqAllCardTujianDataUserCmd">
+    </message>
+    <message id="6" name="RetCardGroupListInfoUserCmd">
+	<col name="info" type="t_Group_List" repeated="1"/>
+    </message>
 </messages>
