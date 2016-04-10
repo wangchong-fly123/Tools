@@ -1,0 +1,10 @@
+<messages basename="HeroCardCmd" namespace="Cmd" secondnamespace="">
+	<message id="2" name="NotifyOneCardTujianInfoCmd">
+		<col name="id" type="DWORD"/>
+		<col name="num" type="DWORD"/>
+		<col name="desc" type="string" size="32"/>
+		<col name="state" type="WORD" repeated="1"/>
+	</message>
+	<message id="4" name="ReqAllCardTujianDataUserCmd">
+	</message>
+</messages>
