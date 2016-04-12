@@ -494,7 +494,7 @@ bool run(int argc, char** argv)
 	    //debug string
 	    ofh<<"        std::string debugString()"<<std::endl;
 	    ofh<<"        {"<<std::endl;
-	    ofh<<"            std::string str = \"\""<<std::endl;
+	    ofh<<"            std::string str = \"\";"<<std::endl;
 	    if (colInfos.empty() == true) {
 	    } else {
 		ofh<<"            std::stringstream stream;"<<std::endl;
@@ -562,7 +562,7 @@ bool run(int argc, char** argv)
 	    //debug string
 	    ofh<<"        std::string debugString()"<<std::endl;
 	    ofh<<"        {"<<std::endl;
-	    ofh<<"            std::string str = \"\""<<std::endl;
+	    ofh<<"            std::string str = \"\";"<<std::endl;
 	    if (colInfos.empty() == true) {
 	    } else {
 		ofh<<"            std::stringstream stream;"<<std::endl;

@@ -37,7 +37,7 @@ namespace Cmd
         char name[32];
         std::string debugString()
         {
-            std::string str = ""
+            std::string str = "";
             std::stringstream stream;
             stream<<index;
             str += stream.str() + ",";
@@ -66,7 +66,7 @@ namespace Cmd
         WORD num;
         std::string debugString()
         {
-            std::string str = ""
+            std::string str = "";
             std::stringstream stream;
             stream<<id;
             str += stream.str() + ",";
@@ -91,7 +91,7 @@ namespace Cmd
         DWORD getSize() { return sizeof(*this) + count*sizeof(t_Tujian); }
         std::string debugString()
         {
-            std::string str = ""
+            std::string str = "";
             std::stringstream stream;
             stream<<count;
             str += stream.str() + ",";
@@ -119,7 +119,7 @@ namespace Cmd
         DWORD getSize() { return sizeof(*this) + count*sizeof(WORD); }
         std::string debugString()
         {
-            std::string str = ""
+            std::string str = "";
             std::stringstream stream;
             stream<<id;
             str += stream.str() + ",";
@@ -146,7 +146,7 @@ namespace Cmd
         }
         std::string debugString()
         {
-            std::string str = ""
+            std::string str = "";
             return str;
         }
     };
@@ -164,7 +164,7 @@ namespace Cmd
         DWORD getSize() { return sizeof(*this) + count*sizeof(t_Group_List); }
         std::string debugString()
         {
-            std::string str = ""
+            std::string str = "";
             std::stringstream stream;
             stream<<count;
             str += stream.str() + ",";
