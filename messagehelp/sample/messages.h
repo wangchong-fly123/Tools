@@ -2,6 +2,7 @@
 #define _MESSAGE_HERO_CARD_CMD_H
 #include "CmdType.h"
 #include "zType.h"
+#include <sstream>
 ///////////////////////////////////////////////
 //
 //code[messages.h] 由 messagehelp 生成,请勿修改
@@ -58,6 +59,15 @@ namespace Cmd
         WORD count;
         t_Tujian info[0];
         DWORD getSize() { return sizeof(*this) + count*sizeof(t_Tujian); }
+        std::string debugString()
+        {
+            std::string str = ""
+            std::stringstream stream;
+            stream<<count;
+            str += stream.str() + ",";
+            stream.clear();
+            return str;
+        }
     };
 
     const BYTE NOTIFY_ONE_CARD_TUJIAN_INFO_CMD = 2;
@@ -77,6 +87,24 @@ namespace Cmd
         WORD count;
         WORD state[0];
         DWORD getSize() { return sizeof(*this) + count*sizeof(WORD); }
+        std::string debugString()
+        {
+            std::string str = ""
+            std::stringstream stream;
+            stream<<id;
+            str += stream.str() + ",";
+            stream.clear();
+            stream<<num;
+            str += stream.str() + ",";
+            stream.clear();
+            stream<<desc;
+            str += stream.str() + ",";
+            stream.clear();
+            stream<<count;
+            str += stream.str() + ",";
+            stream.clear();
+            return str;
+        }
     };
 
     const BYTE REQ_ALL_CARD_TUJIAN_DATA_USER_CMD = 4;
@@ -85,6 +113,11 @@ namespace Cmd
         stReqAllCardTujianDataUserCmd()
         {
             byParam = REQ_ALL_CARD_TUJIAN_DATA_USER_CMD;
+        }
+        std::string debugString()
+        {
+            std::string str = ""
+            return str;
         }
     };
 
@@ -99,6 +132,15 @@ namespace Cmd
         WORD count;
         t_Group_List info[0];
         DWORD getSize() { return sizeof(*this) + count*sizeof(t_Group_List); }
+        std::string debugString()
+        {
+            std::string str = ""
+            std::stringstream stream;
+            stream<<count;
+            str += stream.str() + ",";
+            stream.clear();
+            return str;
+        }
     };
 
 } //end of namespace Cmd
