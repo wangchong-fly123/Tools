@@ -204,6 +204,21 @@ std::string getCmdTypeName(int id, std::map<int, cmdInfo> cmdTypeMap)
     return "";
 }
 
+bool isBaseType(std::string type)
+{
+    if (type == "BYTE" ||
+	type == "WORD" ||
+	type == "SWORD" ||
+	type == "DWORD" ||
+	type == "SDWORD" ||
+	type == "QWORD" ||
+	type == "SQWORD" ||
+	type == "string") {
+	return true;
+    }
+    return false;
+}
+
 bool parseMessageType(std::string fileName, std::map<int, cmdInfo> &cmdTypeMap)
 {
     zXMLParser xml;
@@ -476,6 +491,27 @@ bool run(int argc, char** argv)
 		    ofh<<"        "<<it->type<<" "<<it->name<<";"<<std::endl;
 		}
 	    }
+	    //debug string
+	    ofh<<"        std::string debugString()"<<std::endl;
+	    ofh<<"        {"<<std::endl;
+	    ofh<<"            std::string str = \"\""<<std::endl;
+	    if (colInfos.empty() == true) {
+	    } else {
+		ofh<<"            std::stringstream stream;"<<std::endl;
+		for (std::vector<colInfo>::iterator it = colInfos.begin();
+		     it != colInfos.end(); ++it) {
+		    std::string type(it->type);
+		    if (isBaseType(type)) {
+			ofh<<"            stream<<"<<it->name<<";"<<std::endl;
+			ofh<<"            str += stream.str() + \",\";"<<std::endl;
+			ofh<<"            stream.clear();"<<std::endl;
+		    } else {
+			ofh<<"            str += "<<it->name<<".debugString() + \",\";"<<std::endl;
+		    }
+		}
+	    }
+	    ofh<<"            return str;"<<std::endl;
+	    ofh<<"        }"<<std::endl;
 	    ofh<<"    };"<<std::endl;
 	    ofh<<std::endl;
 	}
@@ -531,11 +567,16 @@ bool run(int argc, char** argv)
 	    } else {
 		ofh<<"            std::stringstream stream;"<<std::endl;
 		for (std::vector<colInfo>::iterator it = colInfos.begin();
-			it != colInfos.end(); ++it) {
+		     it != colInfos.end(); ++it) {
+		    std::string type(it->type);
 		    if (it->repeated == 0) {
-			ofh<<"            stream<<"<<it->name<<";"<<std::endl;
-			ofh<<"            str += stream.str() + \",\";"<<std::endl;
-			ofh<<"            stream.clear();"<<std::endl;
+			if (isBaseType(type)) {
+			    ofh<<"            stream<<"<<it->name<<";"<<std::endl;
+			    ofh<<"            str += stream.str() + \",\";"<<std::endl;
+			    ofh<<"            stream.clear();"<<std::endl;
+			} else {
+			    ofh<<"            str += "<<it->name<<".debugString() + \",\";"<<std::endl;
+			}
 		    } else {
 			ofh<<"            stream<<count;"<<std::endl;
 			ofh<<"            str += stream.str() + \",\";"<<std::endl;

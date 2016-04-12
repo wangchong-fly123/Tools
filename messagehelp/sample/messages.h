@@ -35,6 +35,24 @@ namespace Cmd
         DWORD occupation;
         DWORD cardNum;
         char name[32];
+        std::string debugString()
+        {
+            std::string str = ""
+            std::stringstream stream;
+            stream<<index;
+            str += stream.str() + ",";
+            stream.clear();
+            stream<<occupation;
+            str += stream.str() + ",";
+            stream.clear();
+            stream<<cardNum;
+            str += stream.str() + ",";
+            stream.clear();
+            stream<<name;
+            str += stream.str() + ",";
+            stream.clear();
+            return str;
+        }
     };
 
     struct t_Tujian
@@ -46,6 +64,18 @@ namespace Cmd
         }
         DWORD id;
         WORD num;
+        std::string debugString()
+        {
+            std::string str = ""
+            std::stringstream stream;
+            stream<<id;
+            str += stream.str() + ",";
+            stream.clear();
+            stream<<num;
+            str += stream.str() + ",";
+            stream.clear();
+            return str;
+        }
     };
 
     const BYTE NOTIFY_ALL_CARD_TUJIAN_INFO_CMD = 1;
