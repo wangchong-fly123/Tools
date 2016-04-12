@@ -219,6 +219,16 @@ bool isBaseType(std::string type)
     return false;
 }
 
+std::string getDepth(int deep)
+{
+    std::string str = "";
+    std::string depth = "    ";
+    for (int i = 0; i < deep; ++i) {
+	str += depth;
+    }
+    return str;
+}
+
 bool parseMessageType(std::string fileName, std::map<int, cmdInfo> &cmdTypeMap)
 {
     zXMLParser xml;
@@ -278,7 +288,7 @@ bool parseMessageType(std::string fileName, std::map<int, cmdInfo> &cmdTypeMap)
     ofh<<"{"<<std::endl;
     for (std::map<int, cmdInfo>::iterator iter = cmdTypeMap.begin();
 	 iter != cmdTypeMap.end(); ++iter) {
-	ofh<<"    const BYTE "<<iter->second.name<<" = "<<iter->first<<";";
+	ofh<<getDepth(1)<<"const BYTE "<<iter->second.name<<" = "<<iter->first<<";";
 	std::string comment(iter->second.comment);
 	if (comment != "") {
 	    ofh<<" //"<<comment<<std::endl;;
@@ -453,13 +463,13 @@ bool run(int argc, char** argv)
 	    ofh<<"namespace "<<secondNameSpace<<std::endl;
 	    ofh<<"{"<<std::endl;
 	}
-	ofh<<"    struct st"<<baseName<<" : public stNullUserCmd"<<std::endl;
-	ofh<<"    {"<<std::endl;
-	ofh<<"        st"<<baseName<<"()"<<std::endl;
-	ofh<<"        {"<<std::endl;
-	ofh<<"            byCmd = "<<cmdTypeName<<";"<<std::endl;
-	ofh<<"        }"<<std::endl;
-	ofh<<"    };"<<std::endl;
+	ofh<<getDepth(1)<<"struct st"<<baseName<<" : public stNullUserCmd"<<std::endl;
+	ofh<<getDepth(1)<<"{"<<std::endl;
+	ofh<<getDepth(2)<<"st"<<baseName<<"()"<<std::endl;
+	ofh<<getDepth(2)<<"{"<<std::endl;
+	ofh<<getDepth(3)<<"byCmd = "<<cmdTypeName<<";"<<std::endl;
+	ofh<<getDepth(2)<<"}"<<std::endl;
+	ofh<<getDepth(1)<<"};"<<std::endl;
 	ofh<<std::endl;
 	ofh<<std::endl;
 
@@ -468,51 +478,53 @@ bool run(int argc, char** argv)
 	     iter != structMap.end(); ++iter) {
 	    std::string strcutName = iter->first;
 	    std::vector<colInfo> &colInfos = iter->second.colVec;
-	    ofh<<"    struct "<<iter->second.name<<std::endl;
-	    ofh<<"    {"<<std::endl;
-	    ofh<<"        "<<iter->second.name<<"()"<<std::endl;
-	    ofh<<"        {"<<std::endl;
+	    ofh<<getDepth(1)<<"struct "<<iter->second.name<<std::endl;
+	    ofh<<getDepth(1)<<"{"<<std::endl;
+	    ofh<<getDepth(2)<<iter->second.name<<"()"<<std::endl;
+	    ofh<<getDepth(2)<<"{"<<std::endl;
 	    for (std::vector<colInfo>::iterator it = colInfos.begin();
 		 it != colInfos.end(); ++it) {
-		std::string str(it->type);
-		if (str == "string") {
-		    ofh<<"            memset("<<it->name<<", 0, "<<"sizeof("<<it->name<<")"<<");"<<std::endl;
-		} else {
-		    ofh<<"            "<<it->name<<" = 0;"<<std::endl;
+		std::string type(it->type);
+		if (isBaseType(type)) {
+		    if (type == "string") {
+			ofh<<getDepth(3)<<"memset("<<it->name<<", 0, "<<"sizeof("<<it->name<<")"<<");"<<std::endl;
+		    } else {
+			ofh<<getDepth(3)<<it->name<<" = 0;"<<std::endl;
+		    }
 		}
 	    }
-	    ofh<<"        }"<<std::endl;
+	    ofh<<getDepth(2)<<"}"<<std::endl;
 	    for (std::vector<colInfo>::iterator it = colInfos.begin();
 		    it != colInfos.end(); ++it) {
 		std::string str(it->type);
 		if (str == "string") {
-		    ofh<<"        "<<"char"<<" "<<it->name<<"["<<it->size<<"]"<<";"<<std::endl;
+		    ofh<<getDepth(2)<<"char"<<" "<<it->name<<"["<<it->size<<"]"<<";"<<std::endl;
 		} else {
-		    ofh<<"        "<<it->type<<" "<<it->name<<";"<<std::endl;
+		    ofh<<getDepth(2)<<it->type<<" "<<it->name<<";"<<std::endl;
 		}
 	    }
 	    //debug string
-	    ofh<<"        std::string debugString()"<<std::endl;
-	    ofh<<"        {"<<std::endl;
-	    ofh<<"            std::string str = \"\";"<<std::endl;
+	    ofh<<getDepth(2)<<"std::string debugString()"<<std::endl;
+	    ofh<<getDepth(2)<<"{"<<std::endl;
+	    ofh<<getDepth(3)<<"std::string str = \"\";"<<std::endl;
 	    if (colInfos.empty() == true) {
 	    } else {
-		ofh<<"            std::stringstream stream;"<<std::endl;
+		ofh<<getDepth(3)<<"std::stringstream stream;"<<std::endl;
 		for (std::vector<colInfo>::iterator it = colInfos.begin();
 		     it != colInfos.end(); ++it) {
 		    std::string type(it->type);
 		    if (isBaseType(type)) {
-			ofh<<"            stream<<"<<it->name<<";"<<std::endl;
-			ofh<<"            str += stream.str() + \",\";"<<std::endl;
-			ofh<<"            stream.clear();"<<std::endl;
+			ofh<<getDepth(3)<<"stream<<"<<it->name<<";"<<std::endl;
+			ofh<<getDepth(3)<<"str += stream.str() + \",\";"<<std::endl;
+			ofh<<getDepth(3)<<"stream.clear();"<<std::endl;
 		    } else {
-			ofh<<"            str += "<<it->name<<".debugString() + \",\";"<<std::endl;
+			ofh<<getDepth(3)<<"str += "<<it->name<<".debugString() + \",\";"<<std::endl;
 		    }
 		}
 	    }
-	    ofh<<"            return str;"<<std::endl;
-	    ofh<<"        }"<<std::endl;
-	    ofh<<"    };"<<std::endl;
+	    ofh<<getDepth(3)<<"return str;"<<std::endl;
+	    ofh<<getDepth(2)<<"}"<<std::endl;
+	    ofh<<getDepth(1)<<"};"<<std::endl;
 	    ofh<<std::endl;
 	}
 
@@ -523,70 +535,70 @@ bool run(int argc, char** argv)
 	    std::string bigName = "";
 	    nameToBigName(iter->second.name, bigName);
 	    std::vector<colInfo> &colInfos = iter->second.colVec;
-	    ofh<<"    const BYTE "<<bigName<<" = "<<message_id<<";"<<std::endl;
-	    ofh<<"    struct st"<<iter->second.name<<" : public st"<<baseName<<std::endl;
-	    ofh<<"    {"<<std::endl;
-	    ofh<<"        st"<<iter->second.name<<"()"<<std::endl;
-	    ofh<<"        {"<<std::endl;
-	    ofh<<"            byParam = "<<bigName<<";"<<std::endl;
+	    ofh<<getDepth(1)<<"const BYTE "<<bigName<<" = "<<message_id<<";"<<std::endl;
+	    ofh<<getDepth(1)<<"struct st"<<iter->second.name<<" : public st"<<baseName<<std::endl;
+	    ofh<<getDepth(1)<<"{"<<std::endl;
+	    ofh<<getDepth(2)<<"st"<<iter->second.name<<"()"<<std::endl;
+	    ofh<<getDepth(2)<<"{"<<std::endl;
+	    ofh<<getDepth(3)<<"byParam = "<<bigName<<";"<<std::endl;
 	    for (std::vector<colInfo>::iterator it = colInfos.begin();
 		 it != colInfos.end(); ++it) {
 		if (it->repeated) {
-		    ofh<<"            count = 0;"<<std::endl;
+		    ofh<<getDepth(3)<<"count = 0;"<<std::endl;
 		    continue;
 		}
 		std::string str(it->type);
 		if (str == "string") {
-		    ofh<<"            memset("<<it->name<<", 0, "<<"sizeof("<<it->name<<")"<<");"<<std::endl;
+		    ofh<<getDepth(3)<<"memset("<<it->name<<", 0, "<<"sizeof("<<it->name<<")"<<");"<<std::endl;
 		} else {
-		    ofh<<"            "<<it->name<<" = 0;"<<std::endl;
+		    ofh<<getDepth(3)<<it->name<<" = 0;"<<std::endl;
 		}
 	    }
-	    ofh<<"        }"<<std::endl;
+	    ofh<<getDepth(2)<<"}"<<std::endl;
 	    for (std::vector<colInfo>::iterator it = colInfos.begin();
 		 it != colInfos.end(); ++it) {
 		std::string str(it->type);
 		if (it->repeated) {
-			ofh<<"        WORD count;"<<std::endl;
-			ofh<<"        "<<it->type<<" "<<it->name<<"[0]"<<";"<<std::endl;
-			ofh<<"        DWORD getSize() { return sizeof(*this) + count*sizeof("<<it->type<<"); }"<<std::endl;
+			ofh<<getDepth(2)<<"WORD count;"<<std::endl;
+			ofh<<getDepth(2)<<it->type<<" "<<it->name<<"[0]"<<";"<<std::endl;
+			ofh<<getDepth(2)<<"DWORD getSize() { return sizeof(*this) + count*sizeof("<<it->type<<"); }"<<std::endl;
 		} else {
 		    if (str == "string") {
-			ofh<<"        "<<"char"<<" "<<it->name<<"["<<it->size<<"]"<<";"<<std::endl;
+			ofh<<getDepth(2)<<"char"<<" "<<it->name<<"["<<it->size<<"]"<<";"<<std::endl;
 		    } else {
-			ofh<<"        "<<it->type<<" "<<it->name<<";"<<std::endl;
+			ofh<<getDepth(2)<<it->type<<" "<<it->name<<";"<<std::endl;
 		    }
 		}
 	    }
 
 	    //debug string
-	    ofh<<"        std::string debugString()"<<std::endl;
-	    ofh<<"        {"<<std::endl;
-	    ofh<<"            std::string str = \"\";"<<std::endl;
+	    ofh<<getDepth(2)<<"std::string debugString()"<<std::endl;
+	    ofh<<getDepth(2)<<"{"<<std::endl;
+	    ofh<<getDepth(3)<<"std::string str = \"\";"<<std::endl;
 	    if (colInfos.empty() == true) {
 	    } else {
-		ofh<<"            std::stringstream stream;"<<std::endl;
+		ofh<<getDepth(3)<<"std::stringstream stream;"<<std::endl;
 		for (std::vector<colInfo>::iterator it = colInfos.begin();
 		     it != colInfos.end(); ++it) {
 		    std::string type(it->type);
 		    if (it->repeated == 0) {
 			if (isBaseType(type)) {
-			    ofh<<"            stream<<"<<it->name<<";"<<std::endl;
-			    ofh<<"            str += stream.str() + \",\";"<<std::endl;
-			    ofh<<"            stream.clear();"<<std::endl;
+			    ofh<<getDepth(3)<<"stream<<"<<it->name<<";"<<std::endl;
+			    ofh<<getDepth(3)<<"str += stream.str() + \",\";"<<std::endl;
+			    ofh<<getDepth(3)<<"stream.clear();"<<std::endl;
 			} else {
-			    ofh<<"            str += "<<it->name<<".debugString() + \",\";"<<std::endl;
+			    ofh<<getDepth(3)<<"str += "<<it->name<<".debugString() + \",\";"<<std::endl;
 			}
 		    } else {
-			ofh<<"            stream<<count;"<<std::endl;
-			ofh<<"            str += stream.str() + \",\";"<<std::endl;
-			ofh<<"            stream.clear();"<<std::endl;
+			ofh<<getDepth(3)<<"stream<<count;"<<std::endl;
+			ofh<<getDepth(3)<<"str += stream.str() + \",\";"<<std::endl;
+			ofh<<getDepth(3)<<"stream.clear();"<<std::endl;
 		    }
 		}
 	    }
-	    ofh<<"            return str;"<<std::endl;
-	    ofh<<"        }"<<std::endl;
-	    ofh<<"    };"<<std::endl;
+	    ofh<<getDepth(3)<<"return str;"<<std::endl;
+	    ofh<<getDepth(2)<<"}"<<std::endl;
+	    ofh<<getDepth(1)<<"};"<<std::endl;
 	    ofh<<std::endl;
 	}
 	if (hasSecondNameSpace) {
