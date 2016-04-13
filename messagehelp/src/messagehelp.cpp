@@ -502,7 +502,7 @@ bool run(int argc, char** argv)
 		    std::string type(it->type);
 		    if (isBaseType(type)) {
 			ofh<<getDepth(3)<<"stream<<"<<it->name<<";"<<std::endl;
-			ofh<<getDepth(3)<<"str += stream.str() + \",\";"<<std::endl;
+			ofh<<getDepth(3)<<"str += \""<<it->name<<":\" + stream.str() + \",\";"<<std::endl;
 			ofh<<getDepth(3)<<"stream.clear();"<<std::endl;
 			ofh<<getDepth(3)<<"stream.str(\"\");"<<std::endl;
 		    } else {
@@ -572,15 +572,16 @@ bool run(int argc, char** argv)
 		    if (it->repeated == 0) {
 			if (isBaseType(type)) {
 			    ofh<<getDepth(3)<<"stream<<"<<it->name<<";"<<std::endl;
-			    ofh<<getDepth(3)<<"str += stream.str() + \",\";"<<std::endl;
+			    ofh<<getDepth(3)<<"str += \""<<it->name<<":\" + stream.str() + \",\";"<<std::endl;
 			    ofh<<getDepth(3)<<"stream.clear();"<<std::endl;
 			    ofh<<getDepth(3)<<"stream.str(\"\");"<<std::endl;
 			} else {
 			    ofh<<getDepth(3)<<"str += "<<it->name<<".debugString() + \",\";"<<std::endl;
 			}
 		    } else {
-			ofh<<getDepth(3)<<"stream<<count;"<<std::endl;
-			ofh<<getDepth(3)<<"str += stream.str() + \",\";"<<std::endl;
+			std::string name = "count";
+			ofh<<getDepth(3)<<"stream<<"<<name<<";"<<std::endl;
+			ofh<<getDepth(3)<<"str += \""<<name<<":\"+ stream.str() + \",\";"<<std::endl;
 			ofh<<getDepth(3)<<"stream.clear();"<<std::endl;
 			ofh<<getDepth(3)<<"stream.str(\"\");"<<std::endl;
 		    }
