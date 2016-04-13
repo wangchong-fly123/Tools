@@ -42,15 +42,19 @@ namespace Cmd
             stream<<index;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             stream<<occupation;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             stream<<cardNum;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             stream<<name;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             return str;
         }
     };
@@ -71,9 +75,11 @@ namespace Cmd
             stream<<id;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             stream<<num;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             return str;
         }
     };
@@ -96,6 +102,7 @@ namespace Cmd
             stream<<count;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             return str;
         }
     };
@@ -124,15 +131,19 @@ namespace Cmd
             stream<<id;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             stream<<num;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             stream<<desc;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             stream<<count;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             return str;
         }
     };
@@ -169,6 +180,7 @@ namespace Cmd
             stream<<count;
             str += stream.str() + ",";
             stream.clear();
+            stream.str("");
             return str;
         }
     };
