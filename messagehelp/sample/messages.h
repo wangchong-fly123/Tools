@@ -99,6 +99,14 @@ namespace Cmd
         {
             std::string str = "";
             std::stringstream stream;
+            stream<<(int)byCmd;
+            str += "byCmd:" + stream.str() + ",";
+            stream.clear();
+            stream.str("");
+            stream<<(int)byParam;
+            str += "byParam:" + stream.str() + ",";
+            stream.clear();
+            stream.str("");
             stream<<count;
             str += "count:"+ stream.str() + ",";
             stream.clear();
@@ -128,6 +136,14 @@ namespace Cmd
         {
             std::string str = "";
             std::stringstream stream;
+            stream<<(int)byCmd;
+            str += "byCmd:" + stream.str() + ",";
+            stream.clear();
+            stream.str("");
+            stream<<(int)byParam;
+            str += "byParam:" + stream.str() + ",";
+            stream.clear();
+            stream.str("");
             stream<<id;
             str += "id:" + stream.str() + ",";
             stream.clear();
@@ -177,6 +193,14 @@ namespace Cmd
         {
             std::string str = "";
             std::stringstream stream;
+            stream<<(int)byCmd;
+            str += "byCmd:" + stream.str() + ",";
+            stream.clear();
+            stream.str("");
+            stream<<(int)byParam;
+            str += "byParam:" + stream.str() + ",";
+            stream.clear();
+            stream.str("");
             stream<<count;
             str += "count:"+ stream.str() + ",";
             stream.clear();

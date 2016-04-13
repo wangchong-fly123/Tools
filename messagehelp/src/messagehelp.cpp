@@ -566,6 +566,15 @@ bool run(int argc, char** argv)
 	    if (colInfos.empty() == true) {
 	    } else {
 		ofh<<getDepth(3)<<"std::stringstream stream;"<<std::endl;
+		ofh<<getDepth(3)<<"stream<<(int)byCmd;"<<std::endl;
+		ofh<<getDepth(3)<<"str += \""<<"byCmd"<<":\" + stream.str() + \",\";"<<std::endl;
+		ofh<<getDepth(3)<<"stream.clear();"<<std::endl;
+		ofh<<getDepth(3)<<"stream.str(\"\");"<<std::endl;
+
+		ofh<<getDepth(3)<<"stream<<(int)byParam;"<<std::endl;
+		ofh<<getDepth(3)<<"str += \""<<"byParam"<<":\" + stream.str() + \",\";"<<std::endl;
+		ofh<<getDepth(3)<<"stream.clear();"<<std::endl;
+		ofh<<getDepth(3)<<"stream.str(\"\");"<<std::endl;
 		for (std::vector<colInfo>::iterator it = colInfos.begin();
 		     it != colInfos.end(); ++it) {
 		    std::string type(it->type);
