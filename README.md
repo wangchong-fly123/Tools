@@ -15,6 +15,9 @@ Code Generator
 ```
 ##messagehelp
 ```
+From xml to cpp code, so easy.
+```
+```
 1. source xml
 <?xml version="1.0" encoding="GB2312"?>
 <messages file="message_type.xml" basename="HeroCardCmd" cmdId="162" namespace="Cmd" secondnamespace="">
