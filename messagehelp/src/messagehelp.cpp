@@ -36,12 +36,7 @@ static struct argp_option options[] =
     {"wholefile", 'f',	0,	0,	"xxxxxxxxxxxxxxxxxxxxxxx "},
     {0, 0,	0,	0,	
 	"example:\n\n"
-	    "	1. ./messagehelp cfg.xml\n"
-	    "	2. ./messagehelp cfg.xml -o cfg.h\n"
-	    "	3. ./messagehelp cfg.xml -m \n"
-	    "	4. ./messagehelp cfg.xml -d\n"
-	    "	5. ./messagehelp cfg.xml -n\n"
-	    "	6. ./messagehelp cfg.xml -f\n"
+	    "	1. ./messagehelp cfg.xml -o cfg.h\n"
     },
 
     {0,		0,	0,	0,	0}
@@ -434,9 +429,7 @@ bool run(int argc, char** argv)
 	}
 
 	std::string tmp = args.xmlfile;
-	std::string outsql = args.xmlfile;
 	Zebra::replace_all(tmp, ".xml","");
-	Zebra::replace_all(outsql, ".xml",".sql");
 
 	//h
 	std::string outh = args.xmlfile;
