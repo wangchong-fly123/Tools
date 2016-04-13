@@ -50,6 +50,14 @@ From xml to cpp code, so easy.
         {   
             std::string str = ""; 
             std::stringstream stream;
+            stream<<(int)byCmd;
+            str += "byCmd:" + stream.str() + ",";
+            stream.clear();
+            stream.str("");
+            stream<<(int)byParam;
+            str += "byParam:" + stream.str() + ",";
+            stream.clear();
+            stream.str("");
             stream<<id;
             str += "id:" + stream.str() + ",";
             stream.clear();
@@ -73,5 +81,5 @@ From xml to cpp code, so easy.
   stNotifyOneCardTujianInfoCmd cmd;
   std::string debug_str = cmd.debugString();
 4. after run sample
-  160413-14:08:10 ScenesServer[21] DEBUG: debugstring:id:0,num:0,desc:,count:0,
+  160413-14:08:10 ScenesServer[21] DEBUG: debugstring:byCmd:162,byParam:2,id:0,num:0,desc:,count:0,
 ```
