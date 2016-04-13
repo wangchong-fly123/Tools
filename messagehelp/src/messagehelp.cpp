@@ -27,13 +27,7 @@ static char args_doc[] = "FILE";
 static struct argp_option options[] =
 {
     {0,		0,	0,	0,	"options:\n"},
-    {"output",	'o',	"FILE", 0,	"create the cpp file"},
-    {"memfunc", 'm',	NULL,	0,	"member function "},
-    {"indent",	'i',	"N",	0,	"default is 0 "},
-    {"parse",	'p',	NULL,	0,	"just parse.for check xml"},
-    {"dump",	'd',	NULL,	0,	"parse and dump "},
-    {"nodename",'n',	"NODE",	0,	"rootnode name(default is node messagehelp_)  "},
-    {"wholefile", 'f',	0,	0,	"xxxxxxxxxxxxxxxxxxxxxxx "},
+    {"output",	'o',	"FILE", 0,	"create the .h file"},
     {0, 0,	0,	0,	
 	"example:\n\n"
 	    "	1. ./messagehelp cfg.xml -o cfg.h\n"
