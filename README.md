@@ -1,4 +1,6 @@
 # Tools
+some useful tool
+
 ##SkillParser
 ```
 ```
@@ -11,7 +13,9 @@ Code Generator
 1. xml---->parser code
 2. add code to your project
 3. compile your project
-4. call "Load" when app start, call "Get" when you do something
+4. call "Load" when app start
+   call "Get" when you do something
+   call "Reload" when table file changed
 ```
 ##messagehelp
 ```
