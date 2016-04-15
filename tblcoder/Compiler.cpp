@@ -278,7 +278,7 @@ bool CCompiler::_WriteTblHeaderFile(CTableClassInfo& roClassInfo)
         "    ~%s();\n"
         "\n"
         "    bool Load(const std::string &strConfigDir);\n"
-        "    bool ReLoad(const std::string &strConfigDir);\n",
+        "    bool Reload(const std::string &strConfigDir);\n",
         roClassInfo.m_strClassName,
         roClassInfo.m_strClassName);
 
@@ -605,7 +605,7 @@ bool CCompiler::_WriteTblCppFile(CTableClassInfo& roClassInfo)
         "\n");
 
     fprintf(fp,
-        "bool %s::ReLoad(const std::string &strConfigDir)\n"
+        "bool %s::Reload(const std::string &strConfigDir)\n"
         "{\n"
 	"    CMapItem tempMap;\n"
 	"    tempMap = m_oMapItem;\n"
