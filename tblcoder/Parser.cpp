@@ -1,31 +1,21 @@
 #include "StdAfx.h"
 #include "Parser.h"
 
-const char* ELEM_TABLES     = "tables";
-const char* ELEM_TABLE      = "table";
+const char* ELEM_TABLES           = "tables";
+const char* ELEM_TABLE            = "table";
 
-const char* ATTR_NAME       = "name";
-const char* ATTR_FILE       = "file";
-const char* ATTR_OBJ1       = "obj1";
-const char* ATTR_FILE1      = "file1";
-const char* ATTR_OBJ2       = "obj2";
-const char* ATTR_FILE2      = "file2";
-const char* ATTR_OBJ3       = "obj3";
-const char* ATTR_FILE3      = "file3";
-const char* ATTR_OBJ4       = "obj4";
-const char* ATTR_FILE4      = "file4";
-const char* ATTR_OBJ5       = "obj5";
-const char* ATTR_FILE5      = "file5";
-const char* ATTR_OBJ6       = "obj6";
-const char* ATTR_FILE6      = "file6";
-const char* ATTR_KEY        = "key";
-const char* ATTR_MULTYKEY   = "multikey";
-const char* ATTR_SETKEY     = "setkey";
-const char* ATTR_MULTYSETKEY = "multisetkey";
+const char* ATTR_NAME             = "name";
+const char* ATTR_FILE             = "file";
+const char* ATTR_KEY              = "key";
+const char* ATTR_MULTYKEY         = "multikey";
+const char* ATTR_SETKEY           = "setkey";
+const char* ATTR_MULTYSETKEY      = "multisetkey";
+const char *ATTR_SERVER_ONLY      = "serveronly";
+const char *ATTR_CLIENT_SKIP_LOAD = "clientskipload";
 
-const char* ELEM_COL        = "col";
+const char* ELEM_COL              = "col";
 
-const char* ATTR_TYPE       = "type";
+const char* ATTR_TYPE             = "type";
 
 void _SplitString(const char* pszString, char chSep, vector<string>& roVecSegs)
 {
@@ -111,6 +101,7 @@ bool CParser::Parse(const char* pszFile)
 
 bool CParser::_ParseTable(CMarkupSTL& roXml, CTableInfo& roTableInfo)
 {
+	// name
     roTableInfo.m_strName = roXml.GetAttrib(ATTR_NAME);
     if(roTableInfo.m_strName.empty())
     {
@@ -118,20 +109,10 @@ bool CParser::_ParseTable(CMarkupSTL& roXml, CTableInfo& roTableInfo)
         return false;
     }
 
+	// file
     roTableInfo.m_strFile = roXml.GetAttrib(ATTR_FILE);
-    roTableInfo.m_strObj1 = roXml.GetAttrib(ATTR_OBJ1);
-    roTableInfo.m_strFile1 = roXml.GetAttrib(ATTR_FILE1);
-    roTableInfo.m_strObj2 = roXml.GetAttrib(ATTR_OBJ2);
-    roTableInfo.m_strFile2 = roXml.GetAttrib(ATTR_FILE2);
-    roTableInfo.m_strObj3 = roXml.GetAttrib(ATTR_OBJ3);
-    roTableInfo.m_strFile3 = roXml.GetAttrib(ATTR_FILE3);
-    roTableInfo.m_strObj4 = roXml.GetAttrib(ATTR_OBJ4);
-    roTableInfo.m_strFile4 = roXml.GetAttrib(ATTR_FILE4);
-    roTableInfo.m_strObj5 = roXml.GetAttrib(ATTR_OBJ5);
-    roTableInfo.m_strFile5 = roXml.GetAttrib(ATTR_FILE5);
-    roTableInfo.m_strObj6 = roXml.GetAttrib(ATTR_OBJ6);
-    roTableInfo.m_strFile6 = roXml.GetAttrib(ATTR_FILE6);
 
+	// key
     roTableInfo.m_strKey = roXml.GetAttrib(ATTR_KEY);
     string strMultiKey = roXml.GetAttrib(ATTR_MULTYKEY);
     string strSetKey = roXml.GetAttrib(ATTR_SETKEY);
@@ -190,6 +171,24 @@ bool CParser::_ParseTable(CMarkupSTL& roXml, CTableInfo& roTableInfo)
         m_strErrMsg.Format("can not find attr %s or %s or %s in element %s", ATTR_KEY, ATTR_MULTYKEY, ATTR_SETKEY, ELEM_TABLE);
         return false;
     }
+
+	// server only
+	{
+		std::string strAttr = roXml.GetAttrib(ATTR_SERVER_ONLY);
+		if(strAttr == "1" || strAttr == "true" || strAttr == "True")
+		{
+			roTableInfo.m_bServerOnly = true;
+		}
+	}
+
+	// client skip load
+	{
+		std::string strAttr = roXml.GetAttrib(ATTR_CLIENT_SKIP_LOAD);
+		if(strAttr == "1" || strAttr == "true" || strAttr == "True")
+		{
+			roTableInfo.m_bClientSkipLoad = true;
+		}
+	}
 
     if(false == roXml.IntoElem())
     {

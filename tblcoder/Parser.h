@@ -14,22 +14,9 @@ using namespace std;
 class CColInfo
 {
 public:
-    CColInfo()
+    CColInfo() :
+		m_nType(0)
     {
-
-    }
-
-    CColInfo(const CColInfo& o)
-    {
-        m_strName   = o.m_strName;
-        m_nType     = o.m_nType;
-    }
-
-    CColInfo& operator=(const CColInfo& o)
-    {
-        m_strName   = o.m_strName;
-        m_nType     = o.m_nType;
-        return *this;
     }
 
     string  m_strName;
@@ -39,54 +26,11 @@ public:
 class CTableInfo
 {
 public:
-    CTableInfo()
+    CTableInfo() :
+		m_nKeyMode(0),
+		m_bServerOnly(false),
+		m_bClientSkipLoad(false)
     {
-
-    }
-
-    CTableInfo(const CTableInfo& o)
-    {
-        m_nKeyMode  = o.m_nKeyMode;
-        m_strName   = o.m_strName;
-        m_strFile   = o.m_strFile;
-        m_strKey    = o.m_strKey;
-        m_strKey2   = o.m_strKey2;
-        m_strObj1   = o.m_strObj1;
-        m_strFile1  = o.m_strFile1;
-        m_strObj2   = o.m_strObj2;
-        m_strFile2  = o.m_strFile2;
-        m_strObj3   = o.m_strObj3;
-        m_strFile3  = o.m_strFile3;
-        m_strObj4   = o.m_strObj4;
-        m_strFile4  = o.m_strFile4;
-        m_strObj5   = o.m_strObj5;
-        m_strFile5  = o.m_strFile5;
-        m_strObj6   = o.m_strObj6;
-        m_strFile6  = o.m_strFile6;
-        m_oCols     = o.m_oCols;
-    }
-
-    CTableInfo& operator=(const CTableInfo& o)
-    {
-        m_nKeyMode  = o.m_nKeyMode;
-        m_strName   = o.m_strName;
-        m_strFile   = o.m_strFile;
-        m_strKey    = o.m_strKey;
-        m_strKey2   = o.m_strKey2;
-        m_strObj1   = o.m_strObj1;
-        m_strFile1  = o.m_strFile1;
-        m_strObj2   = o.m_strObj2;
-        m_strFile2  = o.m_strFile2;
-        m_strObj3   = o.m_strObj3;
-        m_strFile3  = o.m_strFile3;
-        m_strObj4   = o.m_strObj4;
-        m_strFile4  = o.m_strFile4;
-        m_strObj5   = o.m_strObj5;
-        m_strFile5  = o.m_strFile5;
-        m_strObj6   = o.m_strObj6;
-        m_strFile6  = o.m_strFile6;
-        m_oCols     = o.m_oCols;
-        return *this;
     }
 
     INT32               m_nKeyMode;
@@ -94,18 +38,8 @@ public:
     string              m_strFile;
     string              m_strKey;
     string              m_strKey2;
-    string              m_strObj1;
-    string              m_strFile1;
-    string              m_strObj2;
-    string              m_strFile2;
-    string              m_strObj3;
-    string              m_strFile3;
-    string              m_strObj4;
-    string              m_strFile4;
-    string              m_strObj5;
-    string              m_strFile5;
-    string              m_strObj6;
-    string              m_strFile6;
+	bool                m_bServerOnly;
+	bool                m_bClientSkipLoad;
     vector<CColInfo>    m_oCols;
 };
 

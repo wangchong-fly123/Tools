@@ -6,6 +6,7 @@
 #include "tblcoder.h"
 #include "tblcoderDlg.h"
 #include "Compiler.h"
+#include "PropCompiler.h"
 #include "markupstl.h"
 
 #ifdef _DEBUG
@@ -108,11 +109,11 @@ BOOL CtblcoderDlg::OnInitDialog()
 	// TODO: Add extra initialization here
 
 	GetDlgItem(IDC_EDIT_XML_PATH)->SetWindowText(
-		"..\\..\\..\\..\\..\\..\\TSSG_CONT\\trunk\\GameData\\tbdata\\table.xml");
+		"..\\..\\..\\..\\..\\TSSG_CONT\\trunk\\GameData\\tbdata\\table.xml");
 	GetDlgItem(IDC_EDIT_OUT_CPP2)->SetWindowText(
-		"..\\..\\src\\table\\");
+		"..\\..\\server2\\src\\table\\");
 	GetDlgItem(IDC_EDIT_OUT_CS)->SetWindowText(
-		"..\\..\\..\\client\\Framework\\tbdata\\");
+		"..\\..\\client\\Framework\\tbdata\\");
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -187,7 +188,6 @@ void CtblcoderDlg::OnBnClickedOk()
 
 void CtblcoderDlg::OnBnClickedBtnOutCpp()
 {
-	/*
     // TODO: Add your control notification handler code here
     BROWSEINFO bInfo;
     memset(&bInfo, '\0', sizeof(BROWSEINFO));
@@ -209,7 +209,6 @@ void CtblcoderDlg::OnBnClickedBtnOutCpp()
         szPath[n-1] = '\0';
 
     GetDlgItem(IDC_EDIT_OUT_CPP)->SetWindowText(szPath);
-	*/
 }
 
 void CtblcoderDlg::OnBnClickedBtnOutCpp2()
@@ -287,7 +286,6 @@ void CtblcoderDlg::OnBnClickedBtnOutPy()
 
 void CtblcoderDlg::OnBnClickedBtnCompileCpp()
 {
-	/*
     CCompiler oCompiler;
 
     //strFile.Format("%s\\table.xml", GetRootPath());
@@ -308,7 +306,6 @@ void CtblcoderDlg::OnBnClickedBtnCompileCpp()
     oCompiler.CompileCpp(m_strLoadFile.c_str());
 
     GetDlgItem(IDC_EDIT_RESULT)->SetWindowText(oCompiler.m_strErrMsg);
-	*/
 }
 
 void CtblcoderDlg::OnBnClickedBtnCompileCpp2()
@@ -330,7 +327,7 @@ void CtblcoderDlg::OnBnClickedBtnCompileCpp2()
     m_strOutputPath = strVal;
     oCompiler.SetOutputPath(m_strOutputPath.c_str());
     
-    oCompiler.CompileCpp(m_strLoadFile.c_str());
+    oCompiler.CompileCpp2(m_strLoadFile.c_str());
 
     GetDlgItem(IDC_EDIT_RESULT)->SetWindowText(oCompiler.m_strErrMsg);
 }

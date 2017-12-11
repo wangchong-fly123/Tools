@@ -1,21 +1,24 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by tblcoder.rc
+// Microsoft Visual C++ 生成的包含文件。
+// 供 tblcoder.rc 使用
 //
-#define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
 #define IDD_TBLCODER_DIALOG             102
 #define IDR_MAINFRAME                   128
+#define IDM_ABOUTBOX                    0x0010
+
 #define IDC_BTN_XML_PATH                1001
 #define IDC_BTN_OUT_CPP                 1002
 #define IDC_BTN_OUT_CPP2                1003
 #define IDC_BTN_OUT_CS                  1004
 #define IDC_BTN_OUT_PY                  1005
+
 #define IDC_BTN_COMPILE_CPP             2001
 #define IDC_BTN_COMPILE_CPP2            2002
 #define IDC_BTN_COMPILE_CS              2003
 #define IDC_BTN_COMPILE_PY              2004
+
 #define IDC_EDIT_XML_PATH               3001
 #define IDC_EDIT_RESULT                 3002
 #define IDC_EDIT_OUT_CPP                3003
